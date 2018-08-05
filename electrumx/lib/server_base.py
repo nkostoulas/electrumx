@@ -68,11 +68,7 @@ class ServerBase(object):
 
     def on_exception(self, loop, context):
         '''Suppress spurious messages it appears we cannot control.'''
-        message = context.get('message')
-        if message in self.SUPPRESS_MESSAGES:
-            return
-        if 'accept_connection2()' in repr(context.get('task')):
-            return
+        self.logger.info(f'CONTEXT: {context}')
         loop.default_exception_handler(context)
 
     async def _main(self, loop):
